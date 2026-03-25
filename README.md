@@ -1,86 +1,133 @@
 # 📦 Sistema de Inventario en Python
 
-![Python](https://img.shields.io/badge/Python-3.x-blue)
-![Status](https://img.shields.io/badge/Status-Activo-success)
-![License](https://img.shields.io/badge/License-MIT-green)
+Sistema de gestión de inventario por consola desarrollado en Python, con soporte para operaciones CRUD, estadísticas y persistencia de datos en formato CSV.
 
-Aplicación de consola desarrollada en **Python** para la gestión de inventario de productos, utilizando estructuras en memoria y persistencia en archivos CSV.
+---
+
+## 📁 Estructura del Proyecto
+
+```
+inventario/
+│
+├── app.py          # Menú principal e interfaz de usuario
+├── servicios.py     # Lógica de negocio (CRUD y estadísticas)
+└── archivos.py      # Persistencia de datos (guardar/cargar CSV)
+```
 
 ---
 
 ## 🚀 Funcionalidades
 
-- ➕ Agregar productos  
-- 📋 Mostrar inventario  
-- 🔍 Buscar productos  
-- ✏️ Actualizar productos  
-- ❌ Eliminar productos  
-- 📊 Generar estadísticas  
-- 💾 Guardar en CSV  
-- 📂 Cargar desde CSV  
+| Opción | Función |
+|--------|---------|
+| 1 | Agregar producto |
+| 2 | Mostrar inventario |
+| 3 | Buscar producto |
+| 4 | Actualizar producto |
+| 5 | Eliminar producto |
+| 6 | Ver estadísticas |
+| 7 | Guardar inventario en CSV |
+| 8 | Cargar inventario desde CSV |
+| 9 | Salir |
 
 ---
 
-## 🧠 Estructura del Proyecto
-📁 proyecto/
-│
-├── app.py # Menú principal (interfaz)
-├── servicios.py # Lógica de negocio
-├── archivos.py # Manejo de archivos CSV
-└── README.md # Documentación
+## 🗂️ Descripción de Módulos
+
+### `app.py` — Interfaz de Usuario
+Punto de entrada del programa. Controla el flujo del menú principal y gestiona las interacciones con el usuario.
+
+- Validación de entradas (nombre, precio, cantidad) antes de delegar a `servicios.py`
+- Uso de bucles de control para garantizar datos correctos
+- Separación clara entre lógica de interfaz y lógica de negocio
+
+**Ejecución:**
+```bash
+python app.py
+```
 
 ---
 
-## ⚙️ Tecnologías
+### `servicios.py` — Lógica de Negocio
+Contiene todas las operaciones sobre el inventario en memoria.
 
-- Python 3  
-- Librerías estándar:
-  - `csv`
-  - `os`
+**Funciones:**
 
----
+| Función | Descripción |
+|---------|-------------|
+| `agregar_producto(inventario, nombre, precio, cantidad)` | Agrega un nuevo producto. Valida duplicados y formato del nombre. |
+| `buscar_producto(inventario, nombre)` | Búsqueda lineal insensible a mayúsculas. Retorna el diccionario del producto o `None`. |
+| `eliminar_producto(inventario, nombre)` | Elimina un producto por nombre. Retorna `True` si fue exitoso. |
+| `calcular_estadisticas(inventario)` | Retorna unidades totales, valor total, producto más caro y de mayor stock. |
 
-## 🗂️ Modelo de Datos
-
-Estructura usada para cada producto:
-
+**Estructura de un producto:**
 ```python
 {
     "nombre": str,
     "precio": float,
     "cantidad": int
 }
-Ejemplo :
-[
-    {"nombre": "lapiz", "precio": 1000, "cantidad": 10},
-    {"nombre": "cuaderno", "precio": 5000, "cantidad": 5}
-]
-🧪 Validaciones
-Nombre obligatorio
-Precio > 0
-Cantidad entera positiva
-Control de duplicados
-Manejo de errores (try/except)
-📊 Estadísticas
-Total de unidades
-Valor total del inventario
-Producto más caro
-Producto con mayor stock
-💾 Persistencia
-Exportación a .csv
-Importación desde .csv
-Opción de sobrescribir o fusionar datos
-🏗️ Arquitectura
-Modular (separación por archivos)
-Basado en capas:
-Interfaz → app.py
-Lógica → servicios.py
-Persistencia → archivos.py
-📌 Buenas prácticas
-Código limpio y estructurado
-Validación de datos
-Reutilización de funciones
-Manejo de excepciones
-Separación de responsabilidades
-AUTOR :
+```
+
+---
+
+### `archivos.py` — Persistencia de Datos
+Maneja la lectura y escritura del inventario en archivos `.csv`.
+
+**Funciones:**
+
+| Función | Descripción |
+|---------|-------------|
+| `guardar_csv(inventario)` | Solicita carpeta y nombre de archivo. Crea la carpeta si no existe y guarda el inventario. |
+| `cargar_csv()` | Lee un archivo CSV y retorna una lista de productos válidos junto con el conteo de errores. |
+
+**Formato del CSV:**
+```
+nombre,precio,cantidad
+producto1,15000.0,10
+producto2,8500.5,25
+```
+
+**Notas:**
+- Solo se permiten archivos con extensión `.csv`
+- Las filas con datos inválidos o negativos son descartadas y contadas como errores
+- Al cargar, el usuario puede elegir **sobrescribir** el inventario actual o **fusionarlo** (suma cantidades si el producto ya existe)
+
+---
+
+## ✅ Validaciones Implementadas
+
+- **Nombre:** No puede estar vacío ni contener espacios
+- **Precio:** Debe ser un número decimal mayor a 0
+- **Cantidad:** Debe ser un número entero mayor a 0
+- **Archivo CSV:** Solo acepta formato `.csv` con nombre simple (sin múltiples extensiones)
+- **Duplicados:** No se permite agregar dos productos con el mismo nombre
+
+---
+
+## 🔧 Requisitos
+
+- Python 3.x
+- No requiere librerías externas (solo módulos estándar: `csv`, `os`)
+
+---
+
+## 📌 Ejemplo de Uso
+
+```
+--- SISTEMA DE INVENTARIO ---
+1. Agregar | 2. Mostrar | 3. Buscar | 4. Actualizar producto | 5. Eliminar | 6. Estadísticas
+7. Guardar CSV | 8. Cargar CSV | 9. Salir
+
+Seleccione opción: 1
+Nombre: Laptop
+Precio: 2500000
+Cantidad: 5
+Producto agregado con éxito.
+```
+
+---
+
+## 👤 Autor
+
 Jefferson Cacerez
