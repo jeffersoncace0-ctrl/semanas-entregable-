@@ -1,37 +1,42 @@
-#ESTE ES UN PROGRMA PARA REGISTRAR PRODUCTOS EN EL INVENTARIO
-
-#SOLICITAR EL NOMBRE DEL PRODUCTO 
+# Solicita al usuario el nombre del producto
 nombre = input("Ingrese el nombre del producto: ")
 
-#VALIDAR PRECIOS 
+# Bucle para validar que el precio sea numérico y mayor a cero
 while True:
     try:
-        precio = float(input("Ingrese el precio del producto: "))
-        if precio < 0:
-            print("El precio no puede ser negativo. Intente de nuevo.")
-            continue
-        break
+        # Solicita el precio y lo convierte a número decimal
+        precio = float(input("Ingrese el precio del producto: $"))
+        if precio > 0:
+            # Si el precio es válido, sale del bucle
+            break
+        else:
+            # Si el precio es cero o negativo, muestra un mensaje y repite el bucle
+            print("Error: Ingrese un precio valido.")
     except ValueError:
-        print("Entrada inválida. Por favor, ingrese un número para el precio.")
+        # Si ingresa un dato no numérico, muestra un mensaje y repite el bucle
+        print("Error: Ingresar solo valores numericos")
 
-#VALIDAR CANTIDAD 
+# Bucle para validar que la cantidad sea numérica y mayor a cero
 while True:
     try:
+        # Solicita la cantidad y la convierte a número entero
         cantidad = int(input("Ingrese la cantidad del producto: "))
-        if cantidad < 0:
-            print("La cantidad no puede ser negativa. Intente de nuevo.")
-            continue
-        break
+        if cantidad > 0:
+            # Si la cantidad es válida, sale del bucle
+            break
+        else:
+            # Si la cantidad es cero o negativa, muestra un mensaje y repite el bucle
+            print("Error: Ingrese una cantidad valida.")
     except ValueError:
-        print("Entrada inválida. Por favor, ingrese un número entero para la cantidad.")
+        # Si ingresa un dato no numérico, muestra un mensaje y repite el bucle
+        print("Error: Ingresar solo valores numericos")
 
-#CALCULAR COSTO TOTAL DEL PRODUCTO 
+# Calcula el costo total multiplicando precio por cantidad
 costo_total = precio * cantidad
 
-#MOSTRAR LOS RESULTADO EN CONSOLA 
-print(f"Producto: {nombre} | Precio: {precio} | Cantidad: {cantidad} | Total: {costo_total}")
+# Muestra un resumen con el nombre, precio, cantidad y total
+print(f"\nProducto: {nombre} | Precio: ${precio:.3f} | Cantidad: {cantidad} | Total: ${costo_total:.3f}")
 
-# Este programa solicita el nombre, precio y cantidad de un producto.
-# Luego valida que los datos numéricos sean correctos, no se permiten numeros en negativos.
-# Finalmente calcula el costo total multiplicando el precio por la cantidad
-# y muestra toda la información en pantalla mediante un resumen de la compra.
+# Este programa solicita el nombre, precio y cantidad de un producto. Valida que ambos
+# valores sean numéricos y mayores a cero mediante bucles con manejo de excepciones.
+# Luego calcula el costo total y muestra un resumen con todos los datos formateados.
